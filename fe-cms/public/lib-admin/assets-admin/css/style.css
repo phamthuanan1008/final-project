@@ -1,0 +1,10 @@
+/* Header.css */
+.nav-second-level {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.nav-second-level.show {
+  max-height: 200px; /* Set your desired max-height */
+}

@@ -1,0 +1,36 @@
+spring:
+  mail:
+    host: smtp.gmail.com
+    username: Phamthanhhuy3062k3@gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+    password: dxuauqulylqcqwsn
+  datasource:
+    password: root
+    username: root
+    url: jdbc:mysql://localhost:3306/fashion
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: true
+minio:
+  bucket: fashion
+  secretKey: minioadmin
+  url: http://127.0.0.1:9000
+  accessKey: minioadmin
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs
+    enabled: true
+server:
+  port: 8080
+jwt:
+  secretKey: 28ABC129DDCFFAHS2310A1232312AABASCSD28ABC129DDCFFAHS2310A1232312AABASCSD28ABC1ABCNSDKAOWUQA12312

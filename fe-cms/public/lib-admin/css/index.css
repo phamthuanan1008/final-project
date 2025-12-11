@@ -1,0 +1,6 @@
+/* Trong file CSS của bạn */
+.selected-page {
+    background-color: black !important;
+    color: white !important; /* Tuỳ chỉnh màu chữ cho hiển thị rõ ràng */
+  }
+  

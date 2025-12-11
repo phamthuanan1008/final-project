@@ -1,0 +1,1 @@
+docker build -t back-end:latest .

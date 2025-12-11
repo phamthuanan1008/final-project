@@ -1,0 +1,78 @@
+version: "3.7"
+
+services:
+  back_end:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    image: phamthuanan/back-end:${BACK_END:-latest}
+    ports:
+      - "8888:8888"
+    container_name: back-end-container
+    networks:
+      - deploy
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    extra_hosts:
+      - localhost:host-gateway
+  fe-cms:
+    build:
+      context: ./fe-cms
+      dockerfile: Dockerfile
+    image: phamthuanan/fe-cms:${FE_CMS:-latest}
+    ports:
+      - "3000:3000"
+    container_name: fe-cms
+    networks:
+      - deploy
+
+  fe-store:
+    build:
+      context: ./fe-store
+      dockerfile: Dockerfile
+    image: phamthuanan/fe-store:${FE_STORE:-latest}
+    ports:
+      - "3001:3001"
+    container_name: fe-store
+    networks:
+      - deploy
+
+  mysql-db:
+    image: mysql:latest
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fashion
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./database/fashion.sql:/docker-entrypoint-initdb.d/fashion.sql
+    networks:
+      - deploy
+    healthcheck:
+      test: ["CMD", "mysql", "-h", "127.0.0.1", "-uroot", "-proot", "-e", "SELECT 1"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+  minio-storage:
+    image: minio/minio:latest
+    container_name: minio-container
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - ./fashion-cloud/fashion-cloud-minio:/data
+    command: server /data --console-address ":9001" --address ":9000"
+    networks:
+      - deploy
+volumes:
+  mysql-data:
+
+networks:
+  deploy:
