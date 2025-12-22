@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 public class SecurityEndpoints {
 
     public static final String[] PUBLIC_GET_ENDPOINTS = {
+            "/api/user/get/*",
             "/api/product/get/**",
             "/api/category-product/get/all",
             "/api/category-product/get/*",
@@ -23,7 +24,6 @@ public class SecurityEndpoints {
 
     public static final String[] ADMIN_STAFF_GET_ENDPOINTS = {
             "/api/category-product/get/all/pagination",
-            "/api/user/get/*",
             "/api/user/get/by/authorize-name",
             "/api/authorize/get/*",
             "/api/order/get/all/pagination",

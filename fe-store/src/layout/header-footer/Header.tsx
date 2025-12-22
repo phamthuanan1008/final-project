@@ -73,7 +73,7 @@ const Header = () => {
                                 <span>Xin chào <b>{user?.lastName + " " + user?.firstName}</b></span> | {" "}
                                 <button onClick={handleLogout}>Đăng xuất</button>
 
-                            </div>) : (<a href="/login" className="login-link">Đăng nhập</a>)}
+                            </div>) : (<div><a href="/login" className="login-link">Đăng nhập</a> | <a href="/register" className="login-link">Đăng kí</a> </div>)}
                             <div
                                 className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
                                 <i className="zmdi zmdi-search"/>

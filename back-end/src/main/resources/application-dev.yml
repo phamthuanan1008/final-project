@@ -13,7 +13,7 @@ spring:
   datasource:
     password: root
     username: root
-    url: jdbc:mysql://localhost:3306/fashion
+    url: jdbc:mysql://localhost:3307/fashion
   jpa:
     hibernate:
       ddl-auto: update
@@ -31,6 +31,6 @@ springdoc:
     path: /api-docs
     enabled: true
 server:
-  port: 8080
+  port: 9999
 jwt:
   secretKey: 28ABC129DDCFFAHS2310A1232312AABASCSD28ABC129DDCFFAHS2310A1232312AABASCSD28ABC1ABCNSDKAOWUQA12312

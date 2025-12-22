@@ -285,6 +285,7 @@ public class UserService {
             String randomTokenActive = codeActive();
             user.setToken_active(randomTokenActive);
             user.setIsActive(true);
+            user.setIsDelete(Boolean.FALSE);
             byte[] imageData = Base64.getDecoder().decode((userDTO.getDataImage()));
 
             InputStream inputStream = new ByteArrayInputStream(imageData);
@@ -319,98 +320,6 @@ public class UserService {
             baseResponse.setCode(Constant.SUCCESS_CODE);
         } catch (Exception e) {
             baseResponse.setMessage(Constant.ERROR_TO_ADD_USER + e.getMessage());
-            baseResponse.setCode(Constant.INTERNAL_SERVER_ERROR_CODE);
-        }
-        return baseResponse;
-    }
-
-    public BaseResponse<UserDTO> registerUser(UserDTO userDTO) {
-        BaseResponse<UserDTO> baseResponse = new BaseResponse<>();
-        try {
-            if (userDTO.getDataImage() == null) {
-                baseResponse.setMessage(Constant.EMPTY_BASE64_IMAGE);
-                baseResponse.setCode(Constant.BAD_REQUEST_CODE);
-                return baseResponse;
-            }
-            User checkUserEmailExits = userRepository.getUserByEmail(userDTO.getEmail());
-            User checkUserUsernameExits = userRepository.getUserByUsername(userDTO.getUsername());
-            if (checkUserUsernameExits != null) {
-                baseResponse.setMessage(Constant.EXISTS_USER_USERNAME + userDTO.getUsername());
-                baseResponse.setCode(Constant.BAD_REQUEST_CODE);
-                return baseResponse;
-            }
-            if (checkUserEmailExits != null) {
-                baseResponse.setMessage(Constant.EXISTS_USER_EMAIL + userDTO.getEmail());
-                baseResponse.setCode(Constant.BAD_REQUEST_CODE);
-                return baseResponse;
-            }
-
-            if (userDTO.getPassword() == null || userDTO.getPassword().isEmpty()) {
-                baseResponse.setMessage(Constant.EMPTY_PASSWORD);
-                baseResponse.setCode(Constant.BAD_REQUEST_CODE);
-                return baseResponse;
-            }
-
-            User user = new User();
-            user.setUserId(userDTO.getUserId());
-            user.setUsername(userDTO.getUsername());
-            user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-            user.setEmail(userDTO.getEmail());
-            user.setFirstName(userDTO.getFirstName());
-            user.setLastname(userDTO.getLastName());
-            user.setAge(userDTO.getAge());
-            user.setAddress(userDTO.getAddress());
-            user.setSex(userDTO.getSex());
-            user.setPhoneNumber(userDTO.getPhoneNumber());
-            String randomTokenActive = codeActive();
-            user.setToken_active(randomTokenActive);
-            user.setIsActive(false);
-
-            //xử lý hình ảnh
-            byte[] imageByte = Base64.getDecoder().decode(userDTO.getDataImage());
-            InputStream inputStream = new ByteArrayInputStream(imageByte);
-            String objectName = "user_" + System.currentTimeMillis() + ".jpg";
-            // config minio
-            minioClient.putObject(
-                    PutObjectArgs.builder().bucket(minioBucketName)
-                            .object(objectName)
-                            .stream(inputStream, imageByte.length, -1)
-                            .contentType("image/jpeg").build()
-            );
-
-            // lấy link url sau khi put
-            user.setUserImage(objectName);
-
-
-            List<Authorize> authorizeList = new ArrayList<>();
-            Authorize userAuthorize = authorizeRepository.getAuthorizeByName("USER");
-//            System.out.println(userAuthorize);
-            if (userAuthorize == null) {
-                baseResponse.setMessage(Constant.NOT_EXISTS_AUTHORIZE_USER_TO_REGISTER);
-                baseResponse.setCode(Constant.NOT_FOUND_CODE);
-                return baseResponse;
-            }
-            authorizeList.add(userAuthorize);
-            user.setAuthorizeList(authorizeList);
-
-            userRepository.save(user);
-
-            //cấu hình mail
-            String subject = "Active tài khoản tài Fashion";
-            String textSendMailActive = "Bạn vừa đăng kí tại khoản ở fashion để tài khoản có thể sử dụng bạn cần xác thực" +
-                    "<Br>Mã xác thực của bạn là:  " + randomTokenActive +
-                    "<Br>Bạn có thể xác thực theo đường link sau: " +
-                    "http://localhost:3000/user-active?email=" + user.getEmail() + "&codeActive=" + randomTokenActive;
-
-            emailConfig.sendMail("phamthanhhuy3062k3@gmail.com", user.getEmail(), subject, textSendMailActive);
-
-            baseResponse.setData(userDTO);
-            baseResponse.setMessage(Constant.SUCCESS_ADD_MESSAGE);
-            baseResponse.setCode(Constant.SUCCESS_CODE);
-
-
-        } catch (Exception e) {
-            baseResponse.setMessage(Constant.ERROR_TO_REGISTER_USER + e.getMessage());
             baseResponse.setCode(Constant.INTERNAL_SERVER_ERROR_CODE);
         }
         return baseResponse;
@@ -612,6 +521,85 @@ public class UserService {
             baseResponse.setCode(Constant.SUCCESS_CODE);
         } catch (Exception e) {
             baseResponse.setMessage(Constant.ERROR_TO_ACTIVE_USER + e.getMessage());
+            baseResponse.setCode(Constant.INTERNAL_SERVER_ERROR_CODE);
+        }
+        return baseResponse;
+    }
+
+
+    public BaseResponse<Map<String, String>> registerUser(RegisterRequest registerRequest) {
+        BaseResponse<Map<String, String>> baseResponse = new BaseResponse<>();
+        try {
+            User checkUserEmailExits = userRepository.getUserByEmail(registerRequest.getEmail());
+            User checkUserUsernameExits = userRepository.getUserByUsername(registerRequest.getUsername());
+            if (checkUserUsernameExits != null) {
+                baseResponse.setMessage(Constant.EXISTS_USER_USERNAME + registerRequest.getUsername());
+                baseResponse.setCode(Constant.BAD_REQUEST_CODE);
+                return baseResponse;
+            }
+            if (checkUserEmailExits != null) {
+                baseResponse.setMessage(Constant.EXISTS_USER_EMAIL + registerRequest.getEmail());
+                baseResponse.setCode(Constant.BAD_REQUEST_CODE);
+                return baseResponse;
+            }
+
+            if (registerRequest.getPassword() == null || registerRequest.getPassword().isEmpty()) {
+                baseResponse.setMessage(Constant.EMPTY_PASSWORD);
+                baseResponse.setCode(Constant.BAD_REQUEST_CODE);
+                return baseResponse;
+            }
+
+            User user = new User();
+            user.setUserId(registerRequest.getUserId());
+            user.setUsername(registerRequest.getUsername());
+            user.setPassword(bCryptPasswordEncoder.encode(registerRequest.getPassword()));
+            user.setEmail(registerRequest.getEmail());
+            user.setFirstName(registerRequest.getFirstName());
+            user.setLastname(registerRequest.getLastName());
+            user.setAge(registerRequest.getAge());
+            user.setAddress(registerRequest.getAddress());
+            user.setSex(registerRequest.getSex());
+            user.setPhoneNumber(registerRequest.getPhoneNumber());
+            String randomTokenActive = codeActive();
+            user.setToken_active(randomTokenActive);
+            user.setIsActive(true);
+            user.setIsDelete(false);
+            user.setUserImage("default_image.jpg");
+
+
+            List<Authorize> authorizeList = new ArrayList<>();
+            Authorize userAuthorize = authorizeRepository.getAuthorizeByName("USER");
+//            System.out.println(userAuthorize);
+            if (userAuthorize == null) {
+                baseResponse.setMessage(Constant.NOT_EXISTS_AUTHORIZE_USER_TO_REGISTER);
+                baseResponse.setCode(Constant.NOT_FOUND_CODE);
+                return baseResponse;
+            }
+            authorizeList.add(userAuthorize);
+            user.setAuthorizeList(authorizeList);
+
+            userRepository.save(user);
+
+//            //cấu hình mail
+//            String subject = "Active tài khoản tài Fashion";
+//            String textSendMailActive = "Bạn vừa đăng kí tại khoản ở fashion để tài khoản có thể sử dụng bạn cần xác thực" +
+//                    "<Br>Mã xác thực của bạn là:  " + randomTokenActive +
+//                    "<Br>Bạn có thể xác thực theo đường link sau: " +
+//                    "http://localhost:3000/user-active?email=" + user.getEmail() + "&codeActive=" + randomTokenActive;
+//
+//            emailConfig.sendMail("phamthanhhuy3062k3@gmail.com", user.getEmail(), subject, textSendMailActive);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("jwt", jwtUtils.generateToken(user.getUsername()));
+            response.put("register", "success!");
+
+            baseResponse.setData(response);
+            baseResponse.setMessage(Constant.SUCCESS_ADD_MESSAGE);
+            baseResponse.setCode(Constant.SUCCESS_CODE);
+
+
+        } catch (Exception e) {
+            baseResponse.setMessage(Constant.ERROR_TO_REGISTER_USER + e.getMessage());
             baseResponse.setCode(Constant.INTERNAL_SERVER_ERROR_CODE);
         }
         return baseResponse;

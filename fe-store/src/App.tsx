@@ -14,6 +14,7 @@ import CartComponents from "./layout/body/cart/CartComponents";
 import Checkout from "./layout/body/checkout/Checkout";
 import Login from "./layout/body/login/Login.tsx";
 import { OrderInformation } from "./layout/body/order-information/OrderInformation.tsx";
+import Register from "./layout/body/register/Register.tsx";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />}/>
+          <Route path="/register" element={<Register />}/>
           <Route path="/order-info" element={<OrderInformation />}/>
         </Routes>
         <Footer />
