@@ -19,6 +19,18 @@
 -- Table structure for table `authorize`
 --
 
+DROP DATABASE IF EXISTS fashion;
+CREATE DATABASE fashion
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+USE fashion;
+
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+
+
+
 DROP TABLE IF EXISTS `authorize`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;

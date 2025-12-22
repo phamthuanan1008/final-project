@@ -29,8 +29,12 @@ services:
     network_mode: host
 
   mysql-db:
-    image: mysql:latest
+    image: mysql:8.0
     container_name: mysql-container
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --init-connect='SET NAMES utf8mb4'
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: fashion
