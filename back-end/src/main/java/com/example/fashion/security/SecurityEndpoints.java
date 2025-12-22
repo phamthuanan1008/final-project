@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 public class SecurityEndpoints {
 
     public static final String[] PUBLIC_GET_ENDPOINTS = {
+            "/api/product/search",
             "/api/user/get/*",
             "/api/product/get/**",
             "/api/category-product/get/all",

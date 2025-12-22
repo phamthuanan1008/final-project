@@ -22,5 +22,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> getListProductByOutstanding(@Param("outstanding") Boolean outstanding, Pageable pageable);
 
 
+    @Query("SELECT p FROM Product p WHERE p.productName ILIKE %:productName%")
+    Page<Product> searchProduct(@Param("productName") String productName, Pageable pageable);
+
+
+
 
 }

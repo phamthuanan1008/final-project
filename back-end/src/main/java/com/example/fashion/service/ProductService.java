@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -67,6 +68,62 @@ public class ProductService {
         BaseResponse<Page<ProductDTO>> baseResponse = new BaseResponse<>();
         try {
             Page<Product> productPage = productRepository.findAll(pageable);
+            if (productPage.isEmpty()) {
+                baseResponse.setMessage(Constant.EMPTY_ALL_PRODUCT);
+                baseResponse.setCode(Constant.NOT_FOUND_CODE);
+                return baseResponse;
+            }
+            List<ProductDTO> productDTOList = new ArrayList<>();
+            for (Product product : productPage) {
+                ProductDTO productDTO = new ProductDTO();
+                // Gán thông tin cơ bản của sản phẩm
+                productDTO.setProductId(product.getProductId());
+                productDTO.setListedPrice(product.getListedPrice());
+                productDTO.setOutstanding(product.getOutstanding());
+                productDTO.setProductCode(product.getProductCode());
+                productDTO.setProductDescription(product.getProductDescription());
+                productDTO.setProductDetail(product.getProductDetail());
+                productDTO.setProductName(product.getProductName());
+                productDTO.setProductPrice(product.getProductPrice());
+                productDTO.setCreatedAt(product.getCreatedAt());
+                productDTO.setInventoryList(convertRelationship.convertToInventoryDTOList(product.getInventoryList()));
+                productDTO.setUser(convertRelationship.convertToUserDTO(product.getUser()));
+                productDTO.setCategoryProduct(convertRelationship.convertToCategoryProductDTO(product.getCategoryProduct()));
+
+                // Xử lý hình ảnh sản phẩm
+                List<ImageDTO> imageDTOList = new ArrayList<>();
+                for (ImageProduct imageProduct : product.getImageList()) {
+                    ImageDTO imageDTO = new ImageDTO();
+                    String object = imageProduct.getImageProduct();
+                    String imageUrl = minioClient.getPresignedObjectUrl(
+                            GetPresignedObjectUrlArgs.builder().method(Method.GET).bucket(minioBucketName).object(object).build()
+                    );
+                    imageDTO.setImageUrl(imageUrl);
+                    imageDTO.setImageProduct(object);
+                    imageDTOList.add(imageDTO);
+                }
+                productDTO.setImageList(imageDTOList);
+
+                productDTOList.add(productDTO);
+            }
+            Page<ProductDTO> productDTOPage = new PageImpl<>(productDTOList, pageable, productPage.getTotalElements());
+            baseResponse.setData(productDTOPage);
+            baseResponse.setMessage(Constant.SUCCESS_MESSAGE);
+            baseResponse.setCode(Constant.SUCCESS_CODE);
+        } catch (Exception e) {
+            baseResponse.setMessage(Constant.ERROR_TO_GET_PRODUCT + e.getMessage());
+            baseResponse.setCode(Constant.INTERNAL_SERVER_ERROR_CODE);
+        }
+        return baseResponse;
+    }
+
+    public BaseResponse<Page<ProductDTO>> searchProduct(String productname, Pageable pageable) {
+        BaseResponse<Page<ProductDTO>> baseResponse = new BaseResponse<>();
+        try {
+
+            String keyword = Normalizer.normalize(productname, Normalizer.Form.NFC);
+            Page<Product> productPage = productRepository.searchProduct(keyword, pageable);
+
             if (productPage.isEmpty()) {
                 baseResponse.setMessage(Constant.EMPTY_ALL_PRODUCT);
                 baseResponse.setCode(Constant.NOT_FOUND_CODE);

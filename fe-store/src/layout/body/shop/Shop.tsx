@@ -2,31 +2,43 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import ProductEntity from '../../../entity/ProductEntity';
-import { getAllProuctPagination } from '../../../utils/CallApi';
+import { getAllProuctPagination, searchProduct } from '../../../utils/CallApi';
 import { formatVND } from '../../../utils/FormatUtil';
 import IconHeart01 from '../../../../public/assets/images/icons/icon-heart-01.png'
 import IconHeart02 from '../../../../public/assets/images/icons/icon-heart-02.png'
 
 const Shop = () => {
     const [listProduct, setListProduct] = useState<ProductEntity[]>([]);
-    const [page, setPage] = useState<number>(0);
-    const [sizePage, setSizePage] = useState<number>(10);
+    const [searchText, setSearchText] = useState("");
+    const [page] = useState(0);
+    const [sizePage] = useState(10);
 
+    // debounce search
     useEffect(() => {
-        getAllProuctPagination(page, sizePage).then((products) => {
-            setListProduct(products);
-        }).catch(error => {
-            console.error("Error fetching products:", error);
-            // Set an empty array or show an error message to the user
-            setListProduct([]);
-        })
-    }, []);
+        const timeout = setTimeout(() => {
+            const keyword = searchText.trim();
+
+            if (keyword === "") {
+                // 🔁 quay về get all
+                getAllProuctPagination(page, sizePage)
+                    .then(setListProduct);
+            } else {
+                // 🔍 search
+                searchProduct(keyword, page, sizePage)
+                    .then(setListProduct);
+            }
+        }, 400); // ⏱ debounce 400ms
+
+        return () => clearTimeout(timeout);
+    }, [searchText]);
+
     return (
         <React.Fragment>
             {/* Product */}
             <div className="bg0 m-t-23 p-b-140">
                 <div className="container">
-                    <Navbar />
+                        {/* Navbar search */}
+                    <Navbar onSearch={setSearchText} />
                     <div className="row ">
                         {listProduct.map((product) => (
                             <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">

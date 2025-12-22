@@ -31,6 +31,13 @@ public class ProductController {
         return new ResponseEntity<>(baseResponse, HttpStatus.valueOf(baseResponse.getCode()));
     }
 
+    @Operation(summary = "Lấy danh sách sản phẩm")
+    @GetMapping("/search")
+    public ResponseEntity<BaseResponse<Page<ProductDTO>>> searchProduct(@RequestParam String productName,  Pageable pageable) {
+        BaseResponse<Page<ProductDTO>> baseResponse = productService.searchProduct(productName, pageable);
+        return new ResponseEntity<>(baseResponse, HttpStatus.valueOf(baseResponse.getCode()));
+    }
+
 
     @Operation(summary = "Lấy sản phẩm theo ID")
     @GetMapping("/get/{id}")

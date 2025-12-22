@@ -1,8 +1,8 @@
 import ProductEntity from "../entity/ProductEntity";
-import {ApiDomain} from "./ApiUtils";
+import { ApiDomain } from "./ApiUtils";
 import User from "../entity/User.ts";
-import {DeliveryMethod} from "../entity/DeliveryMethod.ts";
-import {PaymentMethod} from "../entity/PaymentMethod.ts";
+import { DeliveryMethod } from "../entity/DeliveryMethod.ts";
+import { PaymentMethod } from "../entity/PaymentMethod.ts";
 import Orders from "../entity/Order.ts";
 
 export async function getAllProducts(): Promise<ProductEntity[]> {
@@ -19,6 +19,30 @@ export async function getAllProducts(): Promise<ProductEntity[]> {
         return [];
     }
 }
+
+export async function searchProduct(
+    productName: string,
+    page = 0,
+    size = 10
+): Promise<ProductEntity[]> {
+    try {
+        const response = await fetch(
+            `${ApiDomain}/api/product/search?productName=${encodeURIComponent(productName)}&page=${page}&size=${size}&sort=productId,desc`
+        );
+
+        if (!response.ok) {
+            console.log(`[ERROR-SEARCH-PRODUCT] ${response.status}`);
+            return [];
+        }
+
+        const data = await response.json();
+        return data.data.content;
+    } catch (e) {
+        console.log(`[ERROR-SEARCH-PRODUCT]`, e);
+        return [];
+    }
+}
+
 
 export async function getAllProuctPagination(page: number, size: number): Promise<ProductEntity[]> {
     try {
@@ -124,7 +148,7 @@ export const addOrderApiUtils = async (json: string, userId: number): Promise<Or
         const data = await response.json();
         if (data.code === 200) {
             order = data.data;
-            localStorage.removeItem('cart') 
+            localStorage.removeItem('cart')
         } else {
             console.log(`[ERROR-TO-FETCH-ADD-ORDER] ${data.message}`);
             order = null;
