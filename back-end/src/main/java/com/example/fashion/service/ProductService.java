@@ -9,6 +9,7 @@ import com.example.fashion.repository.*;
 import com.example.fashion.utils.Constant;
 import com.example.fashion.utils.ConvertRelationship;
 import com.example.fashion.utils.Recursive;
+import com.example.fashion.utils.StringUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -121,8 +122,7 @@ public class ProductService {
         BaseResponse<Page<ProductDTO>> baseResponse = new BaseResponse<>();
         try {
 
-            String keyword = Normalizer.normalize(productname, Normalizer.Form.NFC);
-            Page<Product> productPage = productRepository.searchProduct(keyword, pageable);
+            Page<Product> productPage = productRepository.searchProduct(StringUtils.removeVietnameseUnicode(productname), pageable);
 
             if (productPage.isEmpty()) {
                 baseResponse.setMessage(Constant.EMPTY_ALL_PRODUCT);
@@ -302,6 +302,7 @@ public class ProductService {
 
             Product product = new Product();
             product.setProductName(productDTO.getProductName());
+            product.setProductSearch(StringUtils.removeVietnameseUnicode(productDTO.getProductName()));
             product.setProductCode(productDTO.getProductCode());
             product.setListedPrice(productDTO.getListedPrice());
             product.setProductPrice(productDTO.getProductPrice());

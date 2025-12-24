@@ -36,9 +36,9 @@ DROP TABLE IF EXISTS `authorize`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `authorize` (
   `authorize_id` int NOT NULL AUTO_INCREMENT,
-  `authorize_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `authorize_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`authorize_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,14 +60,14 @@ DROP TABLE IF EXISTS `category_post`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category_post` (
   `category_id` bigint NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `category_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `parent_id` bigint DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   PRIMARY KEY (`category_id`),
   KEY `FKhpatx1sql74wecl9jax7jfl1` (`user_id`),
   CONSTRAINT `FKhpatx1sql74wecl9jax7jfl1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,14 +89,14 @@ DROP TABLE IF EXISTS `category_product`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category_product` (
   `category_id` bigint NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `category_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `parent_id` bigint DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   PRIMARY KEY (`category_id`),
   KEY `FK66igf76f6gp805glhjjhn8nau` (`user_id`),
   CONSTRAINT `FK66igf76f6gp805glhjjhn8nau` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +118,7 @@ DROP TABLE IF EXISTS `comment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `comment` (
   `comment_id` bigint NOT NULL AUTO_INCREMENT,
-  `content` text COLLATE utf8mb4_general_ci,
+  `content` text COLLATE utf8mb4_unicode_ci,
   `post_id` bigint NOT NULL,
   `product_id` bigint NOT NULL,
   `user_id` bigint DEFAULT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE `comment` (
   CONSTRAINT `FK8kcum44fvpupyw6f5baccx25c` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKm1rmnfcvq5mk26li4lit88pc5` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `FKs1slvnkuemjsq2kj4h3vhx7i1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,13 +151,13 @@ DROP TABLE IF EXISTS `delivery_method`;
 CREATE TABLE `delivery_method` (
   `delivery_id` bigint NOT NULL AUTO_INCREMENT,
   `delivery_cost` double DEFAULT NULL,
-  `description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   PRIMARY KEY (`delivery_id`),
   KEY `FKdn3a5b2c73prsk8s59l42fj35` (`user_id`),
   CONSTRAINT `FKdn3a5b2c73prsk8s59l42fj35` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,12 +179,12 @@ DROP TABLE IF EXISTS `image_product`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `image_product` (
   `image_id` bigint NOT NULL AUTO_INCREMENT,
-  `image_product` text COLLATE utf8mb4_general_ci,
+  `image_product` text COLLATE utf8mb4_unicode_ci,
   `product_id` bigint NOT NULL,
   PRIMARY KEY (`image_id`),
   KEY `FKml4177k7ufupebm7e4wgmvpnj` (`product_id`),
   CONSTRAINT `FKml4177k7ufupebm7e4wgmvpnj` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +217,7 @@ CREATE TABLE `inventory` (
   CONSTRAINT `FKb43jxceqgi01p6y6makpao44n` FOREIGN KEY (`product_size_id`) REFERENCES `product_size` (`product_size_id`),
   CONSTRAINT `FKnr4f509rcvaophwm70nri5hod` FOREIGN KEY (`product_color_id`) REFERENCES `product_color` (`product_color_id`),
   CONSTRAINT `FKp7gj4l80fx8v0uap3b2crjwp5` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,7 +254,7 @@ CREATE TABLE `order_detail` (
   CONSTRAINT `FKb8bg2bkty0oksa3wiq5mp5qnc` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `FKbwusgmfhhhgdcmrefkvsxhi47` FOREIGN KEY (`product_size_id`) REFERENCES `product_size` (`product_size_id`),
   CONSTRAINT `FKrws2q0si6oyd6il8gqe2aennc` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -276,10 +276,10 @@ DROP TABLE IF EXISTS `orders`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `order_id` bigint NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` date DEFAULT NULL,
-  `note` text COLLATE utf8mb4_general_ci,
-  `status` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `delivery_method_id` bigint DEFAULT NULL,
   `payment_method_id` bigint DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
@@ -290,7 +290,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `FKel9kyl84ego2otj2accfd8mr7` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKgeqwl6x0iadp9e2459uh3o8fv` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_method` (`payment_id`),
   CONSTRAINT `FKq2m2xkvrir0eftwpixx46v9l5` FOREIGN KEY (`delivery_method_id`) REFERENCES `delivery_method` (`delivery_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,14 +312,14 @@ DROP TABLE IF EXISTS `payment_method`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment_method` (
   `payment_id` bigint NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_cost` double DEFAULT NULL,
-  `payment_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `payment_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   PRIMARY KEY (`payment_id`),
   KEY `FK9qgi86n91j5kxnymanelaa1ag` (`user_id`),
   CONSTRAINT `FK9qgi86n91j5kxnymanelaa1ag` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -342,9 +342,9 @@ DROP TABLE IF EXISTS `post`;
 CREATE TABLE `post` (
   `post_id` bigint NOT NULL AUTO_INCREMENT,
   `created_at` date DEFAULT NULL,
-  `post_detail` longtext COLLATE utf8mb4_general_ci,
-  `post_image` longtext COLLATE utf8mb4_general_ci,
-  `post_title` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `post_detail` longtext COLLATE utf8mb4_unicode_ci,
+  `post_image` longtext COLLATE utf8mb4_unicode_ci,
+  `post_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `category_post_id` bigint DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   PRIMARY KEY (`post_id`),
@@ -352,7 +352,7 @@ CREATE TABLE `post` (
   KEY `FK72mt33dhhs48hf9gcqrq4fxte` (`user_id`),
   CONSTRAINT `FK72mt33dhhs48hf9gcqrq4fxte` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKnrreogetrk4nditahvc0082yn` FOREIGN KEY (`category_post_id`) REFERENCES `category_post` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -377,10 +377,11 @@ CREATE TABLE `product` (
   `created_at` date DEFAULT NULL,
   `listed_price` double DEFAULT NULL,
   `outstanding` bit(1) DEFAULT NULL,
-  `product_code` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `product_description` longtext COLLATE utf8mb4_general_ci,
-  `product_detail` text COLLATE utf8mb4_general_ci,
-  `product_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `product_code` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_description` longtext COLLATE utf8mb4_unicode_ci,
+  `product_detail` text COLLATE utf8mb4_unicode_ci,
+  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_search` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_price` double DEFAULT NULL,
   `category_product_id` bigint DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
@@ -389,7 +390,7 @@ CREATE TABLE `product` (
   KEY `FK979liw4xk18ncpl87u4tygx2u` (`user_id`),
   CONSTRAINT `FK979liw4xk18ncpl87u4tygx2u` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKippb821nwiaprbcw1bb77fhm0` FOREIGN KEY (`category_product_id`) REFERENCES `category_product` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -398,7 +399,11 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (7,'2024-06-20',310000,_binary '','#SP21973','CHẤT LIỆU, CÁCH CHĂM SÓC & NGUỒN GỐC\nCHẤT LIỆU\nChúng tôi đang triển khai các chương trình giám sát nhằm đảm bảo sự tuân thủ các tiêu chuẩn của chúng tôi về xã hội, môi trường, cũng như về độ an toàn và tính lành mạnh của các sản phẩm. Nhằm đánh giá sự tuân thủ các tiêu chuẩn này, chúng tôi đã phát triển một chương trình kiểm toán và các kế hoạch cải thiện liên tục.\nLỚP NGOÀI\n100% vải cotton\nCHĂM SÓC\nChăm sóc đúng cách quần áo của mình tức là bạn đang bảo vệ môi trường\nGiặt ở nhiệt độ thấp và sử dụng các chế độ vắt nhẹ nhàng sẽ có lợi hơn cho quần áo, giúp duy trì màu sắc, hình dạng và cấu trúc của vải. Đồng thời giúp làm giảm lượng năng lượng tiêu thụ trong các quá trình chăm sóc. \n\nHướng dẫn bảo quản quần áo\nGiặt máy ở nhiệt độ tối đa 30ºC, vắt ở tốc độ thấp\nKhông sử dụng nước tẩy / thuốc tẩy\nGiặt ở nhiệt độ tối đa 110ºC \nKhông giặt khô\nKhông sử dụng máy sấy\nNGUỒN GỐC\nChúng tôi phối hợp với các nhà cung cấp, người lao động, công đoàn và các tổ chức quốc tế nhằm phát triển một chuỗi cung ứng mà trong đó quyền con người được tôn trọng và thúc đẩy, góp phần thực hiện các Mục tiêu Phát triển Bền vững của Liên Hợp Quốc. \nBằng việc hợp tác với các nhà cung cấp, chúng tôi nỗ lực tìm hiểu các cơ sở và quy trình mà họ sử dụng để sản xuất các sản phẩm may mặc của chúng tôi với mục đích truy xuất nguồn gốc của các sản phẩm.','MID WEIGHT - REGULAR FIT- CỔ TRÒN - CHIỀU DÀI THÔNG THƯỜNG - CỘC TAY\n\nÁo phông 100% vải cotton, cổ tròn, cộc tay.','ÁO PHÔNG COTTON CƠ BẢN',299000,1,6),(8,'2024-06-20',1190000,_binary '','#SP2812315','CHẤT LIỆU, CÁCH CHĂM SÓC & NGUỒN GỐC\nCHẤT LIỆU\nChúng tôi đang triển khai các chương trình giám sát nhằm đảm bảo sự tuân thủ các tiêu chuẩn của chúng tôi về xã hội, môi trường, cũng như về độ an toàn và tính lành mạnh của các sản phẩm. Nhằm đánh giá sự tuân thủ các tiêu chuẩn này, chúng tôi đã phát triển một chương trình kiểm toán và các kế hoạch cải thiện liên tục.\nLỚP NGOÀI\n89% mốt\n11% vải pôliexte\nCHĂM SÓC\nChăm sóc đúng cách quần áo của mình tức là bạn đang bảo vệ môi trường\nGiặt ở nhiệt độ thấp và sử dụng các chế độ vắt nhẹ nhàng sẽ có lợi hơn cho quần áo, giúp duy trì màu sắc, hình dạng và cấu trúc của vải. Đồng thời giúp làm giảm lượng năng lượng tiêu thụ trong các quá trình chăm sóc. ','Quần cạp cao may con đỉa. Có túi hai bên và túi may viền phía sau. Có các chi tiết xếp li. Cài khuy và khóa kéo phía trước.','QUẦN VẢI RŨ XẾP LI',1099000,2,6),(9,'2024-06-20',1390000,_binary '\0','#SP2412213','CHẤT LIỆU, CÁCH CHĂM SÓC & NGUỒN GỐC\nCHẤT LIỆU\nChúng tôi đang triển khai các chương trình giám sát nhằm đảm bảo sự tuân thủ các tiêu chuẩn của chúng tôi về xã hội, môi trường, cũng như về độ an toàn và tính lành mạnh của các sản phẩm. Nhằm đánh giá sự tuân thủ các tiêu chuẩn này, chúng tôi đã phát triển một chương trình kiểm toán và các kế hoạch cải thiện liên tục.\nLỚP NGOÀI\n98% vải cotton\n2% elastane\nCHĂM SÓC\nChăm sóc đúng cách quần áo của mình tức là bạn đang bảo vệ môi trường\nĐể kéo dài tuổi thọ cho quần áo denim của bạn, hãy luôn lộn trái chúng từ trong ra ngoài và giặt chúng ở nhiệt độ thấp. Cách làm như vậy giúp bảo quản màu sắc và cấu trúc vải, đồng thời giúp làm giảm lượng năng lượng tiêu thụ. ','CẠP CAO - ỐNG SUÔNG - DÀI ĐẾN MẮT CÁ CHÂN - THIẾT KẾ THOẢI MÁI\nQuần jeans ống dài đến mắt cá chân, cạp cao, có 5 túi. Kiểu bạc màu. Ống suông, ngắn. Cài phía trước bằng khóa kéo và khuy kim loại.','JEANS Z1975 STRAIGHT ANKLE COMFORT CẠP CAO',1290000,2,6),(10,'2024-06-20',850000,_binary '','#SP27361','CHẤT LIỆU, CÁCH CHĂM SÓC & NGUỒN GỐC\nCHẤT LIỆU\nChúng tôi đang triển khai các chương trình giám sát nhằm đảm bảo sự tuân thủ các tiêu chuẩn của chúng tôi về xã hội, môi trường, cũng như về độ an toàn và tính lành mạnh của các sản phẩm. Nhằm đánh giá sự tuân thủ các tiêu chuẩn này, chúng tôi đã phát triển một chương trình kiểm toán và các kế hoạch cải thiện liên tục.\nLỚP NGOÀI\n83% mốt\n17% vải pôliexte\nLỚP LÓT\n83% mốt\n17% vải pôliexte\nCHĂM SÓC\nChăm sóc đúng cách quần áo của mình tức là bạn đang bảo vệ môi trường\nGiặt ở nhiệt độ thấp và sử dụng các chế độ vắt nhẹ nhàng sẽ có lợi hơn cho quần áo, giúp duy trì màu sắc, hình dạng và cấu trúc của vải. Đồng thời giúp làm giảm lượng năng lượng tiêu thụ trong các quá trình chăm sóc. ','Quần giả chân váy cạp lỡ. Có các chi tiết xếp li. Cài khóa kéo ẩn ở đường may bên hông. Lớp vải lót bên trong kiểu quần short.','QUẦN VÁY VẢI RŨ',799000,4,6),(11,'2024-06-20',1090000,_binary '','#SP219732','CHẤT LIỆU, CÁCH CHĂM SÓC & NGUỒN GỐC\nCHẤT LIỆU\nChúng tôi đang triển khai các chương trình giám sát nhằm đảm bảo sự tuân thủ các tiêu chuẩn của chúng tôi về xã hội, môi trường, cũng như về độ an toàn và tính lành mạnh của các sản phẩm. Nhằm đánh giá sự tuân thủ các tiêu chuẩn này, chúng tôi đã phát triển một chương trình kiểm toán và các kế hoạch cải thiện liên tục.\nLỚP NGOÀI\n60% vải cotton\n40% sợi lyocell\nCHĂM SÓC\nChăm sóc đúng cách quần áo của mình tức là bạn đang bảo vệ môi trường\nChỉ giặt quần áo khi cần thiết, đôi khi chỉ cần phơi quần áo tại nơi thoáng khí là đủ. Quá trình giặt làm hao mòn dần các loại vải. Bằng cách giảm số lần giặt, chúng ta sẽ kéo dài tuổi thọ của quần áo và giảm lượng nước và năng lượng tiêu thụ trong các quá trình chăm sóc. ','CẠP LỠ - DÁNG REGULAR\n\nQuần short bermuda cạp lỡ may con đỉa, có 5 túi. Cài bằng khóa kéo và khuy kim loại.','QUẦN SHORT BERMUDA DENIM TRF CẠP LỠ',999000,2,6);
+INSERT INTO `product` VALUES (7,'2024-06-20',310000,_binary '','#SP21973','CHẤT LIỆU, CÁCH CHĂM SÓC & NGUỒN GỐC\nCHẤT LIỆU\nChúng tôi đang triển khai các chương trình giám sát nhằm đảm bảo sự tuân thủ các tiêu chuẩn của chúng tôi về xã hội, môi trường, cũng như về độ an toàn và tính lành mạnh của các sản phẩm. Nhằm đánh giá sự tuân thủ các tiêu chuẩn này, chúng tôi đã phát triển một chương trình kiểm toán và các kế hoạch cải thiện liên tục.\nLỚP NGOÀI\n100% vải cotton\nCHĂM SÓC\nChăm sóc đúng cách quần áo của mình tức là bạn đang bảo vệ môi trường\nGiặt ở nhiệt độ thấp và sử dụng các chế độ vắt nhẹ nhàng sẽ có lợi hơn cho quần áo, giúp duy trì màu sắc, hình dạng và cấu trúc của vải. Đồng thời giúp làm giảm lượng năng lượng tiêu thụ trong các quá trình chăm sóc. \n\nHướng dẫn bảo quản quần áo\nGiặt máy ở nhiệt độ tối đa 30ºC, vắt ở tốc độ thấp\nKhông sử dụng nước tẩy / thuốc tẩy\nGiặt ở nhiệt độ tối đa 110ºC \nKhông giặt khô\nKhông sử dụng máy sấy\nNGUỒN GỐC\nChúng tôi phối hợp với các nhà cung cấp, người lao động, công đoàn và các tổ chức quốc tế nhằm phát triển một chuỗi cung ứng mà trong đó quyền con người được tôn trọng và thúc đẩy, góp phần thực hiện các Mục tiêu Phát triển Bền vững của Liên Hợp Quốc. \nBằng việc hợp tác với các nhà cung cấp, chúng tôi nỗ lực tìm hiểu các cơ sở và quy trình mà họ sử dụng để sản xuất các sản phẩm may mặc của chúng tôi với mục đích truy xuất nguồn gốc của các sản phẩm.','MID WEIGHT - REGULAR FIT- CỔ TRÒN - CHIỀU DÀI THÔNG THƯỜNG - CỘC TAY\n\nÁo phông 100% vải cotton, cổ tròn, cộc tay.','ÁO PHÔNG COTTON CƠ BẢN', 'AO PHONG COTTON CO BAN',299000,1,6),
+(8,'2024-06-20',1190000,_binary '','#SP2812315','CHẤT LIỆU, CÁCH CHĂM SÓC & NGUỒN GỐC\nCHẤT LIỆU\nChúng tôi đang triển khai các chương trình giám sát nhằm đảm bảo sự tuân thủ các tiêu chuẩn của chúng tôi về xã hội, môi trường, cũng như về độ an toàn và tính lành mạnh của các sản phẩm. Nhằm đánh giá sự tuân thủ các tiêu chuẩn này, chúng tôi đã phát triển một chương trình kiểm toán và các kế hoạch cải thiện liên tục.\nLỚP NGOÀI\n89% mốt\n11% vải pôliexte\nCHĂM SÓC\nChăm sóc đúng cách quần áo của mình tức là bạn đang bảo vệ môi trường\nGiặt ở nhiệt độ thấp và sử dụng các chế độ vắt nhẹ nhàng sẽ có lợi hơn cho quần áo, giúp duy trì màu sắc, hình dạng và cấu trúc của vải. Đồng thời giúp làm giảm lượng năng lượng tiêu thụ trong các quá trình chăm sóc. ','Quần cạp cao may con đỉa. Có túi hai bên và túi may viền phía sau. Có các chi tiết xếp li. Cài khuy và khóa kéo phía trước.','QUẦN VẢI RŨ XẾP LI', 'QUAN VAI RU XEP LI',1099000,2,6),
+(9,'2024-06-20',1390000,_binary '\0','#SP2412213','CHẤT LIỆU, CÁCH CHĂM SÓC & NGUỒN GỐC\nCHẤT LIỆU\nChúng tôi đang triển khai các chương trình giám sát nhằm đảm bảo sự tuân thủ các tiêu chuẩn của chúng tôi về xã hội, môi trường, cũng như về độ an toàn và tính lành mạnh của các sản phẩm. Nhằm đánh giá sự tuân thủ các tiêu chuẩn này, chúng tôi đã phát triển một chương trình kiểm toán và các kế hoạch cải thiện liên tục.\nLỚP NGOÀI\n98% vải cotton\n2% elastane\nCHĂM SÓC\nChăm sóc đúng cách quần áo của mình tức là bạn đang bảo vệ môi trường\nĐể kéo dài tuổi thọ cho quần áo denim của bạn, hãy luôn lộn trái chúng từ trong ra ngoài và giặt chúng ở nhiệt độ thấp. Cách làm như vậy giúp bảo quản màu sắc và cấu trúc vải, đồng thời giúp làm giảm lượng năng lượng tiêu thụ. ','CẠP CAO - ỐNG SUÔNG - DÀI ĐẾN MẮT CÁ CHÂN - THIẾT KẾ THOẢI MÁI\nQuần jeans ống dài đến mắt cá chân, cạp cao, có 5 túi. Kiểu bạc màu. Ống suông, ngắn. Cài phía trước bằng khóa kéo và khuy kim loại.','JEANS Z1975 STRAIGHT ANKLE COMFORT CẠP CAO', 'JEANS Z1975 STRAIGHT ANKLE COMFORT CAP CAO',1290000,2,6),
+(10,'2024-06-20',850000,_binary '','#SP27361','CHẤT LIỆU, CÁCH CHĂM SÓC & NGUỒN GỐC\nCHẤT LIỆU\nChúng tôi đang triển khai các chương trình giám sát nhằm đảm bảo sự tuân thủ các tiêu chuẩn của chúng tôi về xã hội, môi trường, cũng như về độ an toàn và tính lành mạnh của các sản phẩm. Nhằm đánh giá sự tuân thủ các tiêu chuẩn này, chúng tôi đã phát triển một chương trình kiểm toán và các kế hoạch cải thiện liên tục.\nLỚP NGOÀI\n83% mốt\n17% vải pôliexte\nLỚP LÓT\n83% mốt\n17% vải pôliexte\nCHĂM SÓC\nChăm sóc đúng cách quần áo của mình tức là bạn đang bảo vệ môi trường\nGiặt ở nhiệt độ thấp và sử dụng các chế độ vắt nhẹ nhàng sẽ có lợi hơn cho quần áo, giúp duy trì màu sắc, hình dạng và cấu trúc của vải. Đồng thời giúp làm giảm lượng năng lượng tiêu thụ trong các quá trình chăm sóc. ','Quần giả chân váy cạp lỡ. Có các chi tiết xếp li. Cài khóa kéo ẩn ở đường may bên hông. Lớp vải lót bên trong kiểu quần short.','QUẦN VÁY VẢI RŨ', 'QUAN VAY VAI RU',799000,4,6),
+(11,'2024-06-20',1090000,_binary '','#SP219732','CHẤT LIỆU, CÁCH CHĂM SÓC & NGUỒN GỐC\nCHẤT LIỆU\nChúng tôi đang triển khai các chương trình giám sát nhằm đảm bảo sự tuân thủ các tiêu chuẩn của chúng tôi về xã hội, môi trường, cũng như về độ an toàn và tính lành mạnh của các sản phẩm. Nhằm đánh giá sự tuân thủ các tiêu chuẩn này, chúng tôi đã phát triển một chương trình kiểm toán và các kế hoạch cải thiện liên tục.\nLỚP NGOÀI\n60% vải cotton\n40% sợi lyocell\nCHĂM SÓC\nChăm sóc đúng cách quần áo của mình tức là bạn đang bảo vệ môi trường\nChỉ giặt quần áo khi cần thiết, đôi khi chỉ cần phơi quần áo tại nơi thoáng khí là đủ. Quá trình giặt làm hao mòn dần các loại vải. Bằng cách giảm số lần giặt, chúng ta sẽ kéo dài tuổi thọ của quần áo và giảm lượng nước và năng lượng tiêu thụ trong các quá trình chăm sóc. ','CẠP LỠ - DÁNG REGULAR\n\nQuần short bermuda cạp lỡ may con đỉa, có 5 túi. Cài bằng khóa kéo và khuy kim loại.','QUẦN SHORT BERMUDA DENIM TRF CẠP LỠ', 'QUAN SHORT BERMUDA DENIM TRF CAP LO',999000,2,6);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -411,9 +416,9 @@ DROP TABLE IF EXISTS `product_color`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_color` (
   `product_color_id` int NOT NULL AUTO_INCREMENT,
-  `color_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `color_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`product_color_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -435,9 +440,9 @@ DROP TABLE IF EXISTS `product_size`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_size` (
   `product_size_id` int NOT NULL AUTO_INCREMENT,
-  `size_name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `size_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`product_size_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -459,20 +464,20 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `user_id` bigint NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `age` int DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `first_name` varchar(32) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `first_name` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_active` bit(1) DEFAULT NULL,
-  `last_name` varchar(32) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `phone_number` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `sex` char(1) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `token_active` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `user_image` longtext COLLATE utf8mb4_general_ci,
-  `username` varchar(32) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `last_name` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone_number` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sex` char(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `token_active` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_image` longtext COLLATE utf8mb4_unicode_ci,
+  `username` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -499,7 +504,7 @@ CREATE TABLE `user_authorize` (
   KEY `FK14kv1ludyi31l1rpcthtt048n` (`user_id`),
   CONSTRAINT `FK14kv1ludyi31l1rpcthtt048n` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKe5qgog5q07kgn9lhocly05nri` FOREIGN KEY (`authorize_id`) REFERENCES `authorize` (`authorize_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -23,6 +23,9 @@ public class Product {
     @Column(name = "product_name", length = 255)
     private String productName;
 
+    @Column(name = "product_search", length = 255)
+    private String productSearch;
+
     @Column(name = "listed_price")
     private Double listedPrice;
 

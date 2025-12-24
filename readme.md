@@ -2,7 +2,7 @@ Yêu cầu có docker và docker-compose!
 
 Vào đường dẫn gốc của dự án (E-commerce....) 
 
-Chạy lệnh: docker-compose up --build
+Chạy: nếu dùng window chạy file build-window
 
 Tài khoản - mật khẩu trang quản trị: Admin12345678 - @Admin12345678
 
